@@ -176,7 +176,7 @@ textarea {
 }
 
 /* ==========================
-🚫 REMOÇÃO DE LINHAS
+🚫 CORREÇÃO FINAL (REMOVE TODAS AS LINHAS)
 ========================== */
 
 #livro textarea {
@@ -189,27 +189,4 @@ textarea {
 
 #livro * {
   background-image: none !important;
-}
-
-/* ==========================
-📸 TELA DE FOTOS (ADICIONADO)
-========================== */
-
-#fotosTela {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  background: black;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-
-#fotoAtual {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }

@@ -20,11 +20,9 @@ const senhaCorreta = "Mary2026";
 let pagina = 1;
 const total = 300;
 
-// 🔥 NOVO (cores)
 let corFundoAtual = "#ffffff";
 let corTextoAtual = "#000000";
 
-// ELEMENTOS
 const texto = document.getElementById("texto");
 const box = document.querySelector(".box");
 
@@ -49,7 +47,7 @@ function abrirLivro() {
   carregar();
 }
 
-// 🔥 NOVO (FUNÇÃO SALVAR)
+// SALVAR
 async function salvarPagina() {
   await setDoc(doc(db, "livro", "pagina_" + pagina), {
     texto: texto.value,
@@ -58,10 +56,9 @@ async function salvarPagina() {
   });
 }
 
-// SALVAR TEXTO
 texto.addEventListener("input", salvarPagina);
 
-// CARREGAR (ATUALIZADO COM COR)
+// CARREGAR
 function carregar() {
   document.getElementById("paginaNum").innerText = pagina + "/" + total;
 
@@ -70,7 +67,6 @@ function carregar() {
       const data = docSnap.data();
 
       texto.value = data.texto || "";
-
       corFundoAtual = data.corFundo || "#ffffff";
       corTextoAtual = data.corTexto || "#000000";
 
@@ -124,7 +120,7 @@ function tocarMusica() {
   }
 }
 
-// 📱 SWIPE
+// SWIPE
 let startX = 0;
 let endX = 0;
 
@@ -142,7 +138,7 @@ if (box) {
   });
 }
 
-// 🔥 CORES (AGORA SALVA NA HORA)
+// CORES
 document.getElementById("corFundo").oninput = (e) => {
   corFundoAtual = e.target.value;
   box.style.background = corFundoAtual;
@@ -166,3 +162,57 @@ window.abrirLivro = abrirLivro;
 window.proxima = proxima;
 window.voltar = voltar;
 window.irPagina = irPagina;
+
+/* ==========================
+📸 FOTOS (ADICIONADO)
+========================== */
+
+const fotos = [
+  "foto10.jpg",
+  "foto11.jpg",
+  "foto12.jpg",
+  "foto13.jpg"
+];
+
+const tempos = [5000, 5000, 5000, 25000];
+
+let fotoIndex = 0;
+
+const capaObserver = new MutationObserver(() => {
+  const capa = document.getElementById("capa");
+
+  if (capa.style.display === "flex") {
+    capa.style.display = "none";
+    iniciarFotos();
+  }
+});
+
+capaObserver.observe(document.getElementById("capa"), {
+  attributes: true,
+  attributeFilter: ["style"]
+});
+
+function iniciarFotos() {
+  const tela = document.getElementById("fotosTela");
+  tela.style.display = "flex";
+
+  fotoIndex = 0;
+  mostrarFoto();
+}
+
+function mostrarFoto() {
+  const img = document.getElementById("fotoAtual");
+
+  if (fotoIndex >= fotos.length) {
+    document.getElementById("fotosTela").style.display = "none";
+    document.getElementById("capa").style.display = "flex";
+    return;
+  }
+
+  img.src = fotos[fotoIndex];
+
+  setTimeout(() => {
+    fotoIndex++;
+    mostrarFoto();
+  }, tempos[fotoIndex]);
+}
